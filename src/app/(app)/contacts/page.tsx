@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 type SearchUser = { id: string; username: string; displayName: string | null };
 type Contact = {
@@ -46,8 +47,10 @@ export default function ContactsPage() {
         </div>
         <ul className="space-y-2">
           {results.map(u => (
-            <li key={u.id} className="flex justify-between border-b border-neutral-800 pb-2">
-              <span>@{u.username} <span className="text-neutral-500 text-xs">{u.displayName}</span></span>
+            <li key={u.id} className="flex justify-between items-center border-b border-neutral-800 pb-2">
+              <Link href={`/profile/${u.username}`} className="hover:text-brand">
+                @{u.username} <span className="text-neutral-500 text-xs">{u.displayName}</span>
+              </Link>
               <button className="btn-ghost" onClick={() => add(u.id)}>Agregar</button>
             </li>
           ))}
@@ -59,9 +62,11 @@ export default function ContactsPage() {
         {contacts.length === 0 && <p className="text-neutral-500 text-sm">Aún no tienes contactos.</p>}
         <ul className="space-y-2">
           {contacts.map(c => (
-            <li key={c.id} className="flex justify-between border-b border-neutral-800 pb-2">
-              <span>@{c.otherUsername} <span className="text-neutral-500 text-xs">{c.status}</span></span>
-              {c.status === 'pending' && c.addresseeId !== c.requesterId && (
+            <li key={c.id} className="flex justify-between items-center border-b border-neutral-800 pb-2">
+              <Link href={`/profile/${c.otherUsername}`} className="hover:text-brand">
+                @{c.otherUsername} <span className="text-neutral-500 text-xs">{c.status}</span>
+              </Link>
+              {c.status === 'pending' && (
                 <button className="btn-ghost" onClick={() => accept(c.id)}>Aceptar</button>
               )}
             </li>

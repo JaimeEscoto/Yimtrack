@@ -2,35 +2,48 @@ import Link from 'next/link';
 import { db } from '@/db/client';
 import { workoutSessions } from '@/db/schema';
 import { requireUser } from '@/lib/auth';
-import { and, desc, eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
+import { getUserStats } from '@/lib/stats';
+import StatsDashboard from '@/components/StatsDashboard';
+import Avatar from '@/components/Avatar';
 
 export default async function Dashboard() {
   const user = await requireUser();
+  const stats = await getUserStats(user.id);
   const recent = await db.select().from(workoutSessions)
     .where(eq(workoutSessions.userId, user.id))
     .orderBy(desc(workoutSessions.startedAt)).limit(5);
-  const completed = recent.filter(r => r.status === 'completed').length;
 
   return (
     <div className="space-y-6">
-      <section className="card">
-        <h2 className="text-xl font-semibold">Hola, {user.displayName ?? user.username} 👋</h2>
-        <p className="text-neutral-400 mt-1">¿Qué entrenas hoy?</p>
-        <Link href="/workout/today" className="btn-primary mt-4 inline-flex">Generar rutina</Link>
+      <section className="card flex items-center gap-4">
+        <Avatar username={user.username} avatarUrl={user.avatarUrl} size={64} />
+        <div className="flex-1">
+          <h2 className="text-xl font-semibold">Hola, {user.displayName ?? user.username} 👋</h2>
+          <p className="text-neutral-400 text-sm">¿Qué entrenas hoy?</p>
+        </div>
+        <Link href="/workout/today" className="btn-primary">Generar rutina</Link>
       </section>
+
+      <StatsDashboard stats={stats} />
+
       <section className="card">
-        <h3 className="font-semibold mb-3">Últimas sesiones</h3>
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="font-semibold">Últimas sesiones</h3>
+          <Link href="/history" className="text-xs text-brand">Ver todo</Link>
+        </div>
         {recent.length === 0
-          ? <p className="text-neutral-500 text-sm">Aún no has entrenado. ¡A por la primera!</p>
+          ? <p className="text-neutral-500 text-sm">Aún no has entrenado.</p>
           : <ul className="divide-y divide-neutral-800">
               {recent.map(s => (
-                <li key={s.id} className="py-2 flex justify-between text-sm">
-                  <span>{s.focus} · {s.plannedMinutes} min</span>
-                  <span className="text-neutral-500">{s.status}</span>
+                <li key={s.id}>
+                  <Link href={`/history/${s.id}`} className="py-2 flex justify-between text-sm hover:text-brand">
+                    <span className="capitalize">{s.focus} · {s.plannedMinutes} min</span>
+                    <span className="text-neutral-500">{s.status}</span>
+                  </Link>
                 </li>
               ))}
             </ul>}
-        <p className="text-xs text-neutral-500 mt-3">{completed} sesiones completadas en total reciente.</p>
       </section>
     </div>
   );

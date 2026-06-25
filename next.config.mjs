@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   reactStrictMode: true,
   experimental: { serverActions: { bodySizeLimit: '2mb' } },
+  api: { bodyParser: { sizeLimit: '2mb' } },
   webpack: (config) => {
     config.resolve.alias['@'] = path.resolve(__dirname, 'src');
     return config;
