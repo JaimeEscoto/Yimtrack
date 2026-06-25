@@ -18,6 +18,9 @@ export default function SessionPage() {
   const [startTime] = useState(Date.now());
   const [now, setNow] = useState(Date.now());
   const [busy, setBusy] = useState(false);
+  const [swapBusyId, setSwapBusyId] = useState<string | null>(null);
+  const [rejected, setRejected] = useState<string[]>([]);
+  const [swapErr, setSwapErr] = useState<string | null>(null);
   const [unlocked, setUnlocked] = useState<{ name: string; iconEmoji: string | null }[]>([]);
 
   useEffect(() => {
@@ -34,6 +37,33 @@ export default function SessionPage() {
   if (!data) return <p>Cargando…</p>;
 
   const elapsedMin = Math.max(1, Math.round((now - startTime) / 60000));
+
+  async function swap(item: Item) {
+    if (!data) return;
+    setSwapBusyId(item.id); setSwapErr(null);
+    const res = await fetch(`/api/workouts/sessions/${id}/swap`, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ itemId: item.id, excludeIds: rejected })
+    });
+    setSwapBusyId(null);
+    if (!res.ok) {
+      setSwapErr('No encontré un equivalente disponible.');
+      return;
+    }
+    const repl: Item = await res.json();
+    // sustituye el item conservando su id (mismo row en DB)
+    setData({
+      ...data,
+      items: data.items.map(it => it.id === item.id ? { ...it, ...repl } : it)
+    });
+    // resetea el progreso del item reemplazado en estado local
+    setProgress({
+      ...progress,
+      [item.id]: { completedSets: 0, completedReps: repl.plannedReps }
+    });
+    // marcar el ejercicio rechazado para no volver a sugerirlo en esta sesión
+    setRejected([...rejected, item.id]); // nota: este id es el itemId; necesitamos exerciseId
+  }
 
   async function complete() {
     setBusy(true);
@@ -62,6 +92,8 @@ export default function SessionPage() {
         <button className="btn-primary" onClick={complete} disabled={busy}>Completar</button>
       </section>
 
+      {swapErr && <p className="text-xs text-red-400">{swapErr}</p>}
+
       <ol className="space-y-3">
         {data.items.map((it, idx) => {
           const p = progress[it.id] ?? { completedSets: 0, completedReps: it.plannedReps };
@@ -72,6 +104,12 @@ export default function SessionPage() {
                 <div className="flex-1">
                   <div className="font-medium">{idx + 1}. {it.name}</div>
                   <div className="text-xs text-neutral-500">{it.muscleGroups.join(' · ')}</div>
+                  <button
+                    onClick={() => swap(it)}
+                    disabled={swapBusyId === it.id}
+                    className="text-xs text-brand hover:underline mt-1 disabled:opacity-50">
+                    {swapBusyId === it.id ? 'Buscando…' : 'No disponible · cambiar'}
+                  </button>
                 </div>
                 <div className="text-sm text-neutral-300">{it.plannedSets} × {it.plannedReps}</div>
               </div>
