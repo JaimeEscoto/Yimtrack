@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import ExerciseIcon from '@/components/ExerciseIcon';
 
 type Item = {
   id: string; position: number; name: string; muscleGroups: string[];
@@ -66,8 +67,9 @@ export default function SessionPage() {
           const p = progress[it.id] ?? { completedSets: 0, completedReps: it.plannedReps };
           return (
             <li key={it.id} className="card">
-              <div className="flex justify-between">
-                <div>
+              <div className="flex items-center gap-3">
+                <ExerciseIcon muscleGroups={it.muscleGroups} size={56} />
+                <div className="flex-1">
                   <div className="font-medium">{idx + 1}. {it.name}</div>
                   <div className="text-xs text-neutral-500">{it.muscleGroups.join(' · ')}</div>
                 </div>

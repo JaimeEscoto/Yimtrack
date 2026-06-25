@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import ExerciseIcon from '@/components/ExerciseIcon';
 
 const FOCUSES = [
   { key: 'upper', label: 'Tren superior' },
@@ -89,8 +90,9 @@ export default function TodayPage() {
           </div>
           <ol className="space-y-2">
             {proposal.items.map((it, i) => (
-              <li key={i} className="flex justify-between border-b border-neutral-800 pb-2 text-sm">
-                <div>
+              <li key={i} className="flex items-center gap-3 border-b border-neutral-800 pb-2 text-sm">
+                <ExerciseIcon muscleGroups={it.muscleGroups} size={48} />
+                <div className="flex-1">
                   <div className="font-medium">{i + 1}. {it.name}</div>
                   <div className="text-neutral-500 text-xs">{it.muscleGroups.join(' · ')}</div>
                 </div>
