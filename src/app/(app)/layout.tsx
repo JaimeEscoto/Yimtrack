@@ -12,6 +12,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <Link href="/dashboard" className="font-bold text-brand">Yimtrack</Link>
           <nav className="flex gap-4 text-sm">
             <Link href="/workout/today">Entrenar</Link>
+            <Link href="/routines">Rutinas</Link>
             <Link href="/history">Historial</Link>
             <Link href="/achievements">Logros</Link>
             <Link href="/contacts">Contactos</Link>
