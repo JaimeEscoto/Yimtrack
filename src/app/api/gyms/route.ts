@@ -5,6 +5,8 @@ import { requireUser } from '@/lib/auth';
 import { GymSchema } from '@/lib/validation';
 import { ilike, eq } from 'drizzle-orm';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get('q') ?? '';
