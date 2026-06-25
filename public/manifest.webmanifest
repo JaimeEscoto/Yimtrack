@@ -1,0 +1,16 @@
+{
+  "name": "Yimtrack",
+  "short_name": "Yimtrack",
+  "description": "Tu red social de entrenamiento. Rutinas a tu medida, logros y comunidad.",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0a",
+  "theme_color": "#10b981",
+  "categories": ["fitness", "health", "lifestyle"],
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
