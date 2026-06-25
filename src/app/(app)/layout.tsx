@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/lib/auth';
+import SleepPrompt from '@/components/SleepPrompt';
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
@@ -22,6 +23,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </div>
       </header>
       <main className="flex-1 max-w-5xl w-full mx-auto p-4">{children}</main>
+      <SleepPrompt />
     </div>
   );
 }

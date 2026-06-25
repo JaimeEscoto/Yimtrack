@@ -6,6 +6,7 @@ import { desc, eq } from 'drizzle-orm';
 import { getUserStats } from '@/lib/stats';
 import StatsDashboard from '@/components/StatsDashboard';
 import Avatar from '@/components/Avatar';
+import SleepCard from '@/components/SleepCard';
 
 export default async function Dashboard() {
   const user = await requireUser();
@@ -26,6 +27,8 @@ export default async function Dashboard() {
       </section>
 
       <StatsDashboard stats={stats} />
+
+      <SleepCard userId={user.id} />
 
       <section className="card">
         <div className="flex justify-between items-center mb-3">

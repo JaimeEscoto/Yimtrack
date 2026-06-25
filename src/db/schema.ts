@@ -1,6 +1,6 @@
 import {
   pgTable, uuid, text, timestamp, integer, smallint, boolean,
-  numeric, jsonb, primaryKey, uniqueIndex, index
+  numeric, jsonb, primaryKey, uniqueIndex, index, date
 } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
@@ -117,6 +117,17 @@ export const achievements = pgTable('achievements', {
   rule: jsonb('rule').notNull()
 }, (t) => ({
   codeUq: uniqueIndex('achievements_code_uq').on(t.code)
+}));
+
+export const sleepLogs = pgTable('sleep_logs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  logDate: date('log_date').notNull(),
+  sleepTime: text('sleep_time'), // 'HH:MM' del día anterior
+  wakeTime: text('wake_time'),   // 'HH:MM' del logDate
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull()
+}, (t) => ({
+  userDateUq: uniqueIndex('sleep_logs_user_date_uq').on(t.userId, t.logDate)
 }));
 
 export const userAchievements = pgTable('user_achievements', {
