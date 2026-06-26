@@ -5,7 +5,7 @@ export default function StatsDashboard({ stats }: { stats: UserStats }) {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
         <Stat label="Sesiones" value={stats.totalSessions} />
         <Stat label="Minutos" value={stats.totalMinutes} />
         <Stat label="Esta semana" value={stats.thisWeek} />
@@ -61,9 +61,9 @@ export default function StatsDashboard({ stats }: { stats: UserStats }) {
 
 function Stat({ label, value, small }: { label: string; value: string | number; small?: boolean }) {
   return (
-    <div className="card text-center">
-      <div className={`font-bold text-brand ${small ? 'text-lg capitalize' : 'text-3xl'}`}>{value}</div>
-      <div className="text-xs text-neutral-400 mt-1">{label}</div>
+    <div className="card text-center min-w-0">
+      <div className={`font-bold text-brand truncate ${small ? 'text-base sm:text-lg capitalize' : 'text-2xl sm:text-3xl'}`}>{value}</div>
+      <div className="text-[11px] sm:text-xs text-neutral-400 mt-1 truncate">{label}</div>
     </div>
   );
 }

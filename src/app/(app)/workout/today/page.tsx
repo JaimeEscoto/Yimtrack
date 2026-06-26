@@ -104,25 +104,25 @@ export default function TodayPage() {
             ))}
           </div>
         </div>
-        <button className="btn-primary" onClick={propose} disabled={busy}>
+        <button className="btn-primary w-full sm:w-auto" onClick={propose} disabled={busy}>
           {busy ? '…' : 'Generar propuesta'}
         </button>
       </section>
 
       {proposal && (
         <section className="card space-y-3">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-wrap gap-3 justify-between items-center">
             <h3 className="font-semibold">Propuesta · ~{proposal.estimatedMinutes} min</h3>
-            <button className="btn-primary" onClick={start} disabled={busy}>Iniciar sesión</button>
+            <button className="btn-primary w-full sm:w-auto" onClick={start} disabled={busy}>Iniciar sesión</button>
           </div>
           {swapErr && <p className="text-xs text-red-400">{swapErr}</p>}
           <ol className="space-y-2">
             {proposal.items.map((it, i) => (
               <li key={`${it.exerciseId}-${i}`} className="flex items-center gap-3 border-b border-neutral-800 pb-2 text-sm">
-                <ExerciseIcon muscleGroups={it.muscleGroups} size={48} />
-                <div className="flex-1">
-                  <div className="font-medium">{i + 1}. {it.name}</div>
-                  <div className="text-neutral-500 text-xs">{it.muscleGroups.join(' · ')}</div>
+                <ExerciseIcon muscleGroups={it.muscleGroups} size={44} className="shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium truncate">{i + 1}. {it.name}</div>
+                  <div className="text-neutral-500 text-xs truncate">{it.muscleGroups.join(' · ')}</div>
                   <button
                     onClick={() => swap(i)}
                     disabled={swapBusyIdx === i}
@@ -130,9 +130,9 @@ export default function TodayPage() {
                     {swapBusyIdx === i ? 'Buscando…' : 'No disponible · cambiar'}
                   </button>
                 </div>
-                <div className="text-neutral-300 text-right">
-                  <div>{it.sets} × {it.reps}</div>
-                  <div className="text-xs text-neutral-500">desc. {it.restSeconds}s</div>
+                <div className="text-neutral-300 text-right shrink-0">
+                  <div>{it.sets}×{it.reps}</div>
+                  <div className="text-xs text-neutral-500">{it.restSeconds}s</div>
                 </div>
               </li>
             ))}

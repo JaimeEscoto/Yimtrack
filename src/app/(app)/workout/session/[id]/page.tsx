@@ -84,9 +84,9 @@ export default function SessionPage() {
 
   return (
     <div className="space-y-6">
-      <section className="card flex justify-between items-center">
-        <div>
-          <h2 className="text-xl font-semibold capitalize">{data.session.focus}</h2>
+      <section className="card flex flex-wrap gap-3 justify-between items-center">
+        <div className="min-w-0">
+          <h2 className="text-xl font-semibold capitalize truncate">{data.session.focus}</h2>
           <p className="text-sm text-neutral-400">{elapsedMin} / {data.session.plannedMinutes} min</p>
         </div>
         <button className="btn-primary" onClick={complete} disabled={busy}>Completar</button>
@@ -100,10 +100,10 @@ export default function SessionPage() {
           return (
             <li key={it.id} className="card">
               <div className="flex items-center gap-3">
-                <ExerciseIcon muscleGroups={it.muscleGroups} size={56} />
-                <div className="flex-1">
-                  <div className="font-medium">{idx + 1}. {it.name}</div>
-                  <div className="text-xs text-neutral-500">{it.muscleGroups.join(' · ')}</div>
+                <ExerciseIcon muscleGroups={it.muscleGroups} size={48} className="shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium truncate">{idx + 1}. {it.name}</div>
+                  <div className="text-xs text-neutral-500 truncate">{it.muscleGroups.join(' · ')}</div>
                   <button
                     onClick={() => swap(it)}
                     disabled={swapBusyId === it.id}
@@ -111,7 +111,7 @@ export default function SessionPage() {
                     {swapBusyId === it.id ? 'Buscando…' : 'No disponible · cambiar'}
                   </button>
                 </div>
-                <div className="text-sm text-neutral-300">{it.plannedSets} × {it.plannedReps}</div>
+                <div className="text-sm text-neutral-300 shrink-0">{it.plannedSets}×{it.plannedReps}</div>
               </div>
               <div className="grid grid-cols-3 gap-2 mt-3">
                 <div>

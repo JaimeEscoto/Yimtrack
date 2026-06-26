@@ -29,14 +29,14 @@ export default async function Profile({ params }: { params: { username: string }
 
   return (
     <div className="space-y-6">
-      <section className="card flex items-center gap-4">
-        <Avatar username={u.username} avatarUrl={u.avatarUrl} size={80} />
-        <div className="flex-1">
-          <h2 className="text-2xl font-semibold">@{u.username}</h2>
-          <p className="text-neutral-400">{u.displayName}</p>
-          {u.bio && <p className="text-neutral-300 mt-2 text-sm">{u.bio}</p>}
+      <section className="card flex flex-wrap items-center gap-3 sm:gap-4">
+        <Avatar username={u.username} avatarUrl={u.avatarUrl} size={64} />
+        <div className="flex-1 min-w-0">
+          <h2 className="text-xl sm:text-2xl font-semibold truncate">@{u.username}</h2>
+          <p className="text-neutral-400 text-sm truncate">{u.displayName}</p>
+          {u.bio && <p className="text-neutral-300 mt-2 text-sm break-words">{u.bio}</p>}
         </div>
-        {isMe && <Link href="/profile/edit" className="btn-ghost">Editar perfil</Link>}
+        {isMe && <Link href="/profile/edit" className="btn-ghost w-full sm:w-auto">Editar perfil</Link>}
       </section>
 
       <StatsDashboard stats={stats} />

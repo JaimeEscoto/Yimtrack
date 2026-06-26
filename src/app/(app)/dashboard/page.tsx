@@ -17,13 +17,15 @@ export default async function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <section className="card flex items-center gap-4">
-        <Avatar username={user.username} avatarUrl={user.avatarUrl} size={64} />
-        <div className="flex-1">
-          <h2 className="text-xl font-semibold">Hola, {user.displayName ?? user.username} 👋</h2>
+      <section className="card flex flex-wrap items-center gap-3 sm:gap-4">
+        <Avatar username={user.username} avatarUrl={user.avatarUrl} size={56} />
+        <div className="flex-1 min-w-0">
+          <h2 className="text-lg sm:text-xl font-semibold truncate">
+            Hola, {user.displayName ?? user.username} 👋
+          </h2>
           <p className="text-neutral-400 text-sm">¿Qué entrenas hoy?</p>
         </div>
-        <Link href="/workout/today" className="btn-primary">Generar rutina</Link>
+        <Link href="/workout/today" className="btn-primary w-full sm:w-auto">Generar rutina</Link>
       </section>
 
       <StatsDashboard stats={stats} />
