@@ -13,6 +13,7 @@ export const users = pgTable('users', {
   avatarUrl: text('avatar_url'),
   bio: text('bio'),
   primaryGymId: uuid('primary_gym_id'),
+  role: text('role').default('user').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull()
 }, (t) => ({
   usernameUq: uniqueIndex('users_username_uq').on(t.username),

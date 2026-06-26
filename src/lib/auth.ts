@@ -58,3 +58,9 @@ export async function requireUser() {
   if (!u) throw new Error('UNAUTHORIZED');
   return u;
 }
+
+export async function requireAdmin() {
+  const u = await requireUser();
+  if (u.role !== 'admin') throw new Error('FORBIDDEN');
+  return u;
+}

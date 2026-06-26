@@ -3,10 +3,17 @@
 @tailwind utilities;
 
 html, body { height: 100%; }
-body { @apply bg-neutral-950 text-neutral-100; font-family: ui-sans-serif, system-ui, sans-serif; }
+body {
+  @apply bg-neutral-950 text-neutral-100;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+* { min-width: 0; }
+img, svg { max-width: 100%; }
 .btn { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition; }
 .btn-primary { @apply btn bg-brand text-black hover:bg-brand-dark hover:text-white; }
 .btn-ghost { @apply btn bg-neutral-800 hover:bg-neutral-700; }
 .input { @apply w-full rounded-lg bg-neutral-900 border border-neutral-800 px-3 py-2 outline-none focus:border-brand; }
-.card { @apply rounded-xl bg-neutral-900 border border-neutral-800 p-4; }
+.card { @apply rounded-xl bg-neutral-900 border border-neutral-800 p-3 md:p-4; }
 .label { @apply block text-sm text-neutral-400 mb-1; }
