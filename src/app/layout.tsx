@@ -1,6 +1,13 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
 import InstallPrompt from '@/components/InstallPrompt';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap'
+});
 
 export const metadata: Metadata = {
   title: 'Yimtrack',
@@ -19,7 +26,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#10b981',
+  themeColor: '#0a0a0a',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -28,7 +35,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" className={inter.variable}>
       <body>
         {children}
         <InstallPrompt />

@@ -24,22 +24,23 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen flex flex-col">
       <header
-        className="border-b border-neutral-800 bg-neutral-950 sticky top-0 z-20"
+        className="sticky top-0 z-20 border-b border-line-soft bg-surface-base/80 backdrop-blur-xl"
         style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
-          <Link href="/dashboard" className="font-bold text-brand flex items-center gap-2">
-            <img src="/icon.svg" alt="" width={24} height={24} className="rounded" />
-            <span>Yimtrack</span>
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <img src="/icon.svg" alt="" width={28} height={28} className="rounded-lg" />
+            <span className="font-semibold tracking-tight text-base">Yimtrack</span>
           </Link>
           <MobileNav items={items} username={user.username} />
-          {/* En mobile mostramos solo el avatar arriba a la derecha */}
           <Link href={`/profile/${user.username}`} className="md:hidden">
-            <Avatar username={user.username} avatarUrl={user.avatarUrl} size={32} />
+            <span className="block rounded-full ring-2 ring-line">
+              <Avatar username={user.username} avatarUrl={user.avatarUrl} size={32} />
+            </span>
           </Link>
         </div>
       </header>
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-3 md:px-4 py-4 pb-28 md:pb-8">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 md:px-6 py-4 md:py-8 pb-28 md:pb-8 anim-in">
         {children}
       </main>
 

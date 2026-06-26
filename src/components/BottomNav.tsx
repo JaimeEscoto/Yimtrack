@@ -12,7 +12,7 @@ const HomeIcon = (
   </svg>
 );
 const DumbbellIcon = (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="9"  width="3" height="6" rx="1"/>
     <rect x="5" y="7"  width="3" height="10" rx="1"/>
     <rect x="8" y="11" width="8" height="2" rx="1"/>
@@ -25,9 +25,9 @@ const ListIcon = (
     <line x1="8" y1="6" x2="21" y2="6"/>
     <line x1="8" y1="12" x2="21" y2="12"/>
     <line x1="8" y1="18" x2="21" y2="18"/>
-    <circle cx="4" cy="6" r="1"/>
-    <circle cx="4" cy="12" r="1"/>
-    <circle cx="4" cy="18" r="1"/>
+    <circle cx="4" cy="6" r="1.2"/>
+    <circle cx="4" cy="12" r="1.2"/>
+    <circle cx="4" cy="18" r="1.2"/>
   </svg>
 );
 const ClockIcon = (
@@ -86,12 +86,12 @@ const LogoutIcon = (
   </svg>
 );
 
-const TABS: Tab[] = [
-  { href: '/dashboard', label: 'Inicio', icon: HomeIcon },
-  { href: '/workout/today', label: 'Entrenar', icon: DumbbellIcon },
-  { href: '/routines', label: 'Rutinas', icon: ListIcon },
-  { href: '/history', label: 'Historial', icon: ClockIcon }
+const SIDE_TABS: Tab[] = [
+  { href: '/dashboard',     label: 'Inicio',    icon: HomeIcon },
+  { href: '/routines',      label: 'Rutinas',   icon: ListIcon },
+  { href: '/history',       label: 'Historial', icon: ClockIcon }
 ];
+const CENTER_TAB: Tab = { href: '/workout/today', label: 'Entrenar', icon: DumbbellIcon };
 
 export default function BottomNav({ username, isAdmin }: { username: string; isAdmin: boolean }) {
   const pathname = usePathname();
@@ -105,65 +105,83 @@ export default function BottomNav({ username, isAdmin }: { username: string; isA
   ];
   if (isAdmin) more.push({ href: '/admin', label: 'Admin', icon: ShieldIcon });
 
-  const moreActive = !TABS.some(t => pathname.startsWith(t.href));
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
+  const allKnown = [CENTER_TAB.href, ...SIDE_TABS.map(t => t.href)];
+  const moreActive = !allKnown.some(h => isActive(h));
 
   return (
     <>
       <nav
-        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-neutral-950/95 backdrop-blur border-t border-neutral-800"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-30"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
-        <ul className="grid grid-cols-5">
-          {TABS.map(t => {
-            const active = pathname.startsWith(t.href);
-            return (
-              <li key={t.href}>
-                <Link href={t.href}
-                  className={`flex flex-col items-center gap-0.5 py-2 text-[10px] ${
-                    active ? 'text-brand' : 'text-neutral-400'}`}>
-                  {t.icon}
-                  <span>{t.label}</span>
-                </Link>
-              </li>
-            );
-          })}
-          <li>
-            <button
-              onClick={() => setMoreOpen(true)}
-              className={`w-full flex flex-col items-center gap-0.5 py-2 text-[10px] ${
-                moreActive ? 'text-brand' : 'text-neutral-400'}`}>
-              {MoreIcon}
-              <span>Más</span>
-            </button>
-          </li>
-        </ul>
+        <div className="relative">
+          {/* Fondo translúcido con blur */}
+          <div className="absolute inset-0 bg-surface-base/85 backdrop-blur-xl border-t border-line-soft" />
+
+          <ul className="relative grid grid-cols-5 items-end px-2 pt-2 pb-1.5">
+            {/* IZQUIERDA */}
+            {SIDE_TABS.slice(0, 2).map(t => (
+              <Tab key={t.href} tab={t} active={isActive(t.href)} />
+            ))}
+
+            {/* CENTRO — CTA elevado */}
+            <li className="flex justify-center -mt-7">
+              <Link href={CENTER_TAB.href} aria-label={CENTER_TAB.label}
+                className="group flex flex-col items-center">
+                <span
+                  className={`w-14 h-14 rounded-full flex items-center justify-center text-black transition
+                    ${isActive(CENTER_TAB.href) ? 'scale-105' : 'scale-100'}`}
+                  style={{
+                    background: 'linear-gradient(180deg, #10b981 0%, #059669 100%)',
+                    boxShadow: '0 8px 24px -6px rgba(16,185,129,0.55), 0 1px 0 rgba(255,255,255,0.2) inset'
+                  }}>
+                  {CENTER_TAB.icon}
+                </span>
+                <span className="mt-1 text-[10px] font-medium text-ink">{CENTER_TAB.label}</span>
+              </Link>
+            </li>
+
+            {/* DERECHA */}
+            <Tab tab={SIDE_TABS[2]} active={isActive(SIDE_TABS[2].href)} />
+            <li>
+              <button
+                onClick={() => setMoreOpen(true)}
+                className={`w-full flex flex-col items-center gap-0.5 py-1.5 ${
+                  moreActive ? 'text-brand' : 'text-ink-muted'}`}>
+                <span className={moreActive ? 'opacity-100' : 'opacity-85'}>{MoreIcon}</span>
+                <span className="text-[10px] font-medium">Más</span>
+              </button>
+            </li>
+          </ul>
+        </div>
       </nav>
 
       {moreOpen && (
         <div
-          className="md:hidden fixed inset-0 z-40 bg-black/60"
+          className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
           onClick={() => setMoreOpen(false)}>
           <div
             onClick={e => e.stopPropagation()}
-            className="absolute bottom-0 left-0 right-0 bg-neutral-950 rounded-t-2xl border-t border-neutral-800 p-4"
+            className="absolute bottom-0 left-0 right-0 bg-surface-1 rounded-t-3xl border-t border-line p-4 anim-in"
             style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' }}>
-            <div className="mx-auto w-10 h-1 rounded-full bg-neutral-700 mb-4" />
+            <div className="mx-auto w-10 h-1 rounded-full bg-line mb-4" />
+            <h4 className="text-sm font-semibold mb-3">Más opciones</h4>
             <ul className="grid grid-cols-2 gap-2">
               {more.map(m => (
                 <li key={m.href}>
                   <Link href={m.href} onClick={() => setMoreOpen(false)}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-neutral-900 hover:bg-neutral-800">
+                    className="flex items-center gap-3 p-3 rounded-xl bg-surface-2 hover:bg-surface-3 transition">
                     <span className="text-brand">{m.icon}</span>
-                    <span className="text-sm">{m.label}</span>
+                    <span className="text-sm font-medium">{m.label}</span>
                   </Link>
                 </li>
               ))}
               <li className="col-span-2">
                 <form action="/api/auth/logout" method="post"
                   onSubmit={() => setTimeout(() => location.href = '/login', 100)}>
-                  <button type="submit"
-                    className="w-full flex items-center justify-center gap-2 p-3 rounded-xl bg-neutral-900 text-red-400 hover:bg-neutral-800">
+                  <button type="submit" className="btn-danger w-full">
                     {LogoutIcon}
-                    <span className="text-sm">Cerrar sesión</span>
+                    <span>Cerrar sesión</span>
                   </button>
                 </form>
               </li>
@@ -172,5 +190,23 @@ export default function BottomNav({ username, isAdmin }: { username: string; isA
         </div>
       )}
     </>
+  );
+}
+
+function Tab({ tab, active }: { tab: Tab; active: boolean }) {
+  return (
+    <li>
+      <Link href={tab.href}
+        className={`flex flex-col items-center gap-0.5 py-1.5 transition ${
+          active ? 'text-brand' : 'text-ink-muted hover:text-ink'}`}>
+        <span className="relative">
+          {tab.icon}
+          {active && (
+            <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-brand" />
+          )}
+        </span>
+        <span className="text-[10px] font-medium mt-0.5">{tab.label}</span>
+      </Link>
+    </li>
   );
 }
