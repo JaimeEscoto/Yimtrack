@@ -36,7 +36,11 @@ export default async function Profile({ params }: { params: { username: string }
           <p className="text-neutral-400 text-sm truncate">{u.displayName}</p>
           {u.bio && <p className="text-neutral-300 mt-2 text-sm break-words">{u.bio}</p>}
         </div>
-        {isMe && <Link href="/profile/edit" className="btn-ghost w-full sm:w-auto">Editar perfil</Link>}
+        {isMe ? (
+          <Link href="/profile/edit" className="btn-ghost w-full sm:w-auto">Editar perfil</Link>
+        ) : (
+          <Link href={`/chat/${u.username}`} className="btn-primary w-full sm:w-auto">💬 Mensaje</Link>
+        )}
       </section>
 
       <StatsDashboard stats={stats} />

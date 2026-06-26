@@ -120,6 +120,26 @@ export const achievements = pgTable('achievements', {
   codeUq: uniqueIndex('achievements_code_uq').on(t.code)
 }));
 
+export const conversations = pgTable('conversations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userAId: uuid('user_a_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  userBId: uuid('user_b_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  lastMessageAt: timestamp('last_message_at', { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull()
+}, (t) => ({
+  pairUq: uniqueIndex('conversations_pair_uq').on(t.userAId, t.userBId)
+}));
+
+export const messages = pgTable('messages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  conversationId: uuid('conversation_id').references(() => conversations.id, { onDelete: 'cascade' }).notNull(),
+  senderId: uuid('sender_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  body: text('body').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull()
+}, (t) => ({
+  convIdx: index('messages_conv_idx').on(t.conversationId, t.createdAt)
+}));
+
 export const sleepLogs = pgTable('sleep_logs', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),

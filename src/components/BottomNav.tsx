@@ -86,10 +86,23 @@ const LogoutIcon = (
   </svg>
 );
 
+const ChatIcon = (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+);
+const FeedIcon = (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9"/>
+    <path d="M4 4a16 16 0 0 1 16 16"/>
+    <circle cx="5" cy="19" r="1.5"/>
+  </svg>
+);
+
 const SIDE_TABS: Tab[] = [
-  { href: '/dashboard',     label: 'Inicio',    icon: HomeIcon },
-  { href: '/routines',      label: 'Rutinas',   icon: ListIcon },
-  { href: '/history',       label: 'Historial', icon: ClockIcon }
+  { href: '/dashboard', label: 'Inicio', icon: HomeIcon },
+  { href: '/feed',      label: 'Feed',   icon: FeedIcon },
+  { href: '/chat',      label: 'Chat',   icon: ChatIcon }
 ];
 const CENTER_TAB: Tab = { href: '/workout/today', label: 'Entrenar', icon: DumbbellIcon };
 
@@ -98,6 +111,8 @@ export default function BottomNav({ username, isAdmin }: { username: string; isA
   const [moreOpen, setMoreOpen] = useState(false);
 
   const more: MoreItem[] = [
+    { href: '/routines', label: 'Rutinas', icon: ListIcon },
+    { href: '/history', label: 'Historial', icon: ClockIcon },
     { href: '/achievements', label: 'Logros', icon: TrophyIcon },
     { href: '/contacts', label: 'Contactos', icon: UsersIcon },
     { href: '/gym', label: 'Gimnasio', icon: BuildingIcon },

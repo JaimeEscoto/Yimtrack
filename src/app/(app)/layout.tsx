@@ -12,9 +12,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   const items = [
     { href: '/dashboard', label: 'Inicio' },
+    { href: '/feed', label: 'Feed' },
     { href: '/workout/today', label: 'Entrenar' },
     { href: '/routines', label: 'Rutinas' },
     { href: '/history', label: 'Historial' },
+    { href: '/chat', label: 'Chat' },
     { href: '/achievements', label: 'Logros' },
     { href: '/contacts', label: 'Contactos' },
     { href: '/gym', label: 'Gym' }
