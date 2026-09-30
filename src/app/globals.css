@@ -11,21 +11,21 @@
   --text:         #f5f5f5;
   --text-muted:   #a3a3a3;
   --text-dim:     #6b6b6b;
-  --brand:        #10b981;
-  --brand-dark:   #047857;
-  --brand-soft:   rgba(16, 185, 129, 0.12);
+  --brand:        #8b5cf6;
+  --brand-dark:   #6d28d9;
+  --brand-soft:   rgba(139, 92, 246, 0.12);
   --accent-blue:  #38bdf8;
   --accent-amber: #f59e0b;
   --accent-pink:  #f472b6;
   --danger:       #ef4444;
-  --ring:         rgba(16, 185, 129, 0.4);
+  --ring:         rgba(139, 92, 246, 0.4);
 }
 
 * { min-width: 0; }
 html, body { height: 100%; }
 body {
   background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(16,185,129,0.06), transparent 60%),
+    radial-gradient(1200px 600px at 80% -10%, rgba(139, 92, 246, 0.06), transparent 60%),
     radial-gradient(900px 500px at -10% 110%, rgba(56,189,248,0.04), transparent 60%),
     var(--bg);
   color: var(--text);
@@ -52,8 +52,8 @@ img, svg { max-width: 100%; }
 .btn:active { transform: scale(0.97); }
 .btn-primary {
   @apply btn text-black;
-  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 8px 24px -10px rgba(16,185,129,0.45);
+  background: linear-gradient(180deg, #8b5cf6 0%, #7c3aed 100%);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 8px 24px -10px rgba(139,92,246,0.45);
 }
 .btn-primary:hover { filter: brightness(1.05); }
 .btn-ghost {
@@ -105,8 +105,8 @@ img, svg { max-width: 100%; }
 }
 .chip-brand {
   background: var(--brand-soft);
-  border-color: rgba(16,185,129,0.25);
-  color: #6ee7b7;
+  border-color: rgba(139,92,246,0.25);
+  color: #c4b5fd;
 }
 
 /* SEGMENT (tabs/pills) */

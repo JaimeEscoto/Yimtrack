@@ -147,8 +147,8 @@ export default function BottomNav({ username, isAdmin }: { username: string; isA
                   className={`w-14 h-14 rounded-full flex items-center justify-center text-black transition
                     ${isActive(CENTER_TAB.href) ? 'scale-105' : 'scale-100'}`}
                   style={{
-                    background: 'linear-gradient(180deg, #10b981 0%, #059669 100%)',
-                    boxShadow: '0 8px 24px -6px rgba(16,185,129,0.55), 0 1px 0 rgba(255,255,255,0.2) inset'
+                    background: 'linear-gradient(180deg, #8b5cf6 0%, #7c3aed 100%)',
+                    boxShadow: '0 8px 24px -6px rgba(139,92,246,0.55), 0 1px 0 rgba(255,255,255,0.2) inset'
                   }}>
                   {CENTER_TAB.icon}
                 </span>
@@ -212,8 +212,8 @@ function Tab({ tab, active }: { tab: Tab; active: boolean }) {
   return (
     <li>
       <Link href={tab.href}
-        className={`flex flex-col items-center gap-0.5 py-1.5 transition ${
-          active ? 'text-brand' : 'text-ink-muted hover:text-ink'}`}>
+        className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-2xl transition ${
+          active ? 'text-brand bg-brand/10' : 'text-ink-muted hover:text-ink hover:bg-surface-2'}`}>
         <span className="relative">
           {tab.icon}
           {active && (
