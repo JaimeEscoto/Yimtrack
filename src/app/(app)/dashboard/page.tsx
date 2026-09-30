@@ -16,8 +16,8 @@ export default async function Dashboard() {
     .orderBy(desc(workoutSessions.startedAt)).limit(5);
 
   return (
-    <div className="space-y-6">
-      <section className="card flex flex-wrap items-center gap-3 sm:gap-4">
+    <div className="space-y-8">
+      <section className="card hover:shadow-lg hover:border-line transition-all duration-300 flex flex-wrap items-center gap-3 sm:gap-4">
         <Avatar username={user.username} avatarUrl={user.avatarUrl} size={56} />
         <div className="flex-1 min-w-0">
           <h2 className="text-lg sm:text-xl font-semibold truncate">
@@ -32,9 +32,12 @@ export default async function Dashboard() {
 
       <SleepCard userId={user.id} />
 
-      <section className="card">
+      <section className="card hover:shadow-lg hover:border-line transition-all duration-300">
         <div className="flex justify-between items-center mb-3">
-          <h3 className="font-semibold">Últimas sesiones</h3>
+          <h3 className="font-semibold flex items-center gap-2">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Últimas sesiones
+          </h3>
           <Link href="/history" className="text-xs text-brand">Ver todo</Link>
         </div>
         {recent.length === 0

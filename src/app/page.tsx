@@ -20,8 +20,8 @@ export default async function Home() {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link href="/login" className="btn-ghost w-full sm:w-auto">Iniciar sesión</Link>
-          <Link href="/register" className="btn-primary w-full sm:w-auto">Crear cuenta</Link>
+          <Link href="/login" className="btn-ghost w-full sm:w-auto hover:scale-105 transition-transform duration-200">Iniciar sesión</Link>
+          <Link href="/register" className="btn-primary w-full sm:w-auto hover:scale-105 transition-transform duration-200">Crear cuenta</Link>
         </div>
       </div>
     </main>

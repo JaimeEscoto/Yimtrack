@@ -8,7 +8,7 @@ const config: Config = {
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif']
       },
       colors: {
-        brand: { DEFAULT: '#10b981', dark: '#047857', soft: 'rgba(16,185,129,0.12)' },
+        brand: { DEFAULT: '#8b5cf6', dark: '#6d28d9', soft: 'rgba(139,92,246,0.12)' },
         ink: {
           DEFAULT: '#f5f5f5',
           muted: '#a3a3a3',
@@ -24,7 +24,7 @@ const config: Config = {
       },
       boxShadow: {
         soft: '0 8px 24px -10px rgba(0,0,0,0.6)',
-        glow: '0 8px 24px -10px rgba(16,185,129,0.45)'
+        glow: '0 8px 24px -10px rgba(139,92,246,0.45)'
       }
     }
   },

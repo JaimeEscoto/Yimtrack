@@ -29,7 +29,7 @@ export default function StatsDashboard({ stats }: { stats: UserStats }) {
               <div className="w-full rounded-md relative overflow-hidden" style={{
                 height: `${Math.max(4, (d.count / maxDay) * 100)}%`,
                 background: d.count
-                  ? 'linear-gradient(180deg, #10b981 0%, #047857 100%)'
+                  ? 'linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%)'
                   : 'rgba(255,255,255,0.04)'
               }}>
                 {d.count > 0 && (
@@ -87,7 +87,7 @@ export default function StatsDashboard({ stats }: { stats: UserStats }) {
 }
 
 const ACCENT_STYLE: Record<string, { color: string; bar: string }> = {
-  brand: { color: '#6ee7b7', bar: '#10b981' },
+  brand: { color: '#c4b5fd', bar: '#8b5cf6' },
   blue:  { color: '#7dd3fc', bar: '#38bdf8' },
   amber: { color: '#fcd34d', bar: '#f59e0b' },
   pink:  { color: '#f9a8d4', bar: '#f472b6' }
@@ -98,7 +98,7 @@ function Stat({
 }: { label: string; value: string | number; small?: boolean; accent?: keyof typeof ACCENT_STYLE }) {
   const a = ACCENT_STYLE[accent];
   return (
-    <div className="card relative overflow-hidden">
+    <div className="card relative overflow-hidden hover:-translate-y-1 hover:shadow-md hover:border-line transition-all duration-200">
       <span className="absolute top-0 left-0 right-0 h-0.5" style={{ background: a.bar, opacity: 0.6 }} />
       <div className={`font-bold tracking-tight tnum truncate ${small ? 'text-base sm:text-lg capitalize' : 'text-2xl sm:text-3xl'}`}
         style={{ color: a.color }}>
